@@ -7,32 +7,24 @@ import org.github.gamescripting.unsereWgBot.reposiories.PeopleRepository
 import org.springframework.stereotype.Component
 import org.telegram.abilitybots.api.bot.AbilityBot
 import org.telegram.abilitybots.api.objects.Flag
-import org.telegram.abilitybots.api.objects.Reply
 import org.telegram.telegrambots.api.methods.send.SendMessage
-import org.telegram.telegrambots.api.objects.CallbackQuery
-import org.telegram.telegrambots.api.objects.Message
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import java.util.function.Consumer
 import java.util.function.Predicate
 import javax.transaction.Transactional
 
-val BOT_TOKEN = System.getenv("BOT_TOKEN")
-
 private val mapper = ObjectMapper()
-
 
 @Component
 class UnsereWgBot(
         val fritzbox: Fritzbox,
-        val peopleRepository: PeopleRepository
-) : AbilityBot(BOT_TOKEN, "unser_wg_bot") {
-
-    companion object {
-    }
+        val peopleRepository: PeopleRepository,
+        val telegramBotConfig: TelegramBotConfig
+) : AbilityBot(telegramBotConfig.botToken, telegramBotConfig.botUsername) {
 
     override fun creatorId(): Int {
-        return -837653572
+        return telegramBotConfig.creatorId ?: throw Exception("Please set the telegramBot.creatorId in the config")
     }
 
     var lastSelectedMacAdress: String? = null
@@ -59,22 +51,23 @@ class UnsereWgBot(
                 val x = 5
             }
             .reply(Consumer { update ->
+                val networkDevices = fritzbox.readNetworkDevices()
                 val macAdresses = fritzbox.getMacAdressesInNetwork()
                 val allPeople = peopleRepository.findAll()
 
                 val message = update.message ?: return@Consumer
 
-                val buttons = macAdresses.map { macAdress ->
-                    val person = allPeople.firstOrNull { it.macAdress == macAdress }
+                val buttons = networkDevices.map { device ->
+                    val person = allPeople.firstOrNull { it.macAdress == device.macAddress }
 
                     if (person == null) {
                         InlineKeyboardButton().apply {
-                            text = macAdress
-                            callbackData = macAdress
+                            text = "${device.macAddress} (${device.hostName})"
+                            callbackData = device.macAddress
                         }
                     } else {
                         InlineKeyboardButton().apply {
-                            callbackData = macAdress
+                            callbackData = device.macAddress
                             text = person.displayName
                         }
                     }
