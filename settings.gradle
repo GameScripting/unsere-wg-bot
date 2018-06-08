@@ -1,0 +1,2 @@
+include ':fritztr064'
+project(':fritztr064').projectDir = new File('/home/daniel/repos/FritzTR064')

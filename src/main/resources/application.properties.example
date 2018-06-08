@@ -1,7 +1,9 @@
+logging.level.root=INFO
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.DerbyDialect
 spring.datasource.driver-class-name=org.apache.derby.jdbc.EmbeddedDriver
 spring.datasource.url=jdbc:derby:unsere-wg-bot.derby;create=true
 
-#spring.jpa.properties.username=sa
-#spring.jpa.properties.password=sa
+fritztr064.address=fritz.box
+fritztr064.user=fritz-pi
+fritztr064.password=PASSWORD
