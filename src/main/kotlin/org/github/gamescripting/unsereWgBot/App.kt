@@ -14,6 +14,8 @@ class App(
         ApiContextInitializer.init()
         val telegramBotsApi = TelegramBotsApi()
         telegramBotsApi.registerBot(unsereWgBot)
+
+        unsereWgBot.sayHelloAfterStart()
     }
 }
 

@@ -9,4 +9,5 @@ class TelegramBotConfig {
     var botToken: String? = null
     var botUsername: String? = null
     var creatorId: Int? = null
+    var allowedGroupIds: Array<Long> = arrayOf()
 }

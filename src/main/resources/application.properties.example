@@ -9,6 +9,7 @@ spring.datasource.password=postgres
 telegramBot.botToken=TOKEN
 telegramBot.botUsername=unser_wg_bot
 telegramBot.creatorId=CREATOR_ID
+telegrambot.allowedGroupIds=YOUR_GROUP_ID
 
 fritztr064.address=fritz.box
 fritztr064.user=fritz-pi
