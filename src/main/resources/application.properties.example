@@ -1,8 +1,10 @@
 logging.level.root=INFO
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.DerbyDialect
-spring.datasource.driver-class-name=org.apache.derby.jdbc.EmbeddedDriver
-spring.datasource.url=jdbc:derby:unsere-wg-bot.derby;create=true
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL94Dialect
+spring.datasource.url=jdbc:postgresql://localhost:5432/unserewgbot
+spring.datasource.username=postgres
+spring.datasource.password=postgres
 
 telegramBot.botToken=TOKEN
 telegramBot.botUsername=unser_wg_bot
