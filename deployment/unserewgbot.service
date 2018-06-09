@@ -1,0 +1,14 @@
+[Unit]
+Description=The unserewgbot unit file
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/unsere-wg-bot
+ExecStart=/usr/bin/java -Xms100m -Xmx300m -jar unsere-wg-bot-0.1.jar
+Restart=always
+User=unserewgbot
+StandardOutput=out.log
+StandardError=err.log
+
+[Install]
+WantedBy=multi-user.target
